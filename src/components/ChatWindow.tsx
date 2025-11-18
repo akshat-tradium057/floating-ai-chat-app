@@ -4,7 +4,7 @@ import BotAndUserChat from "./BotAndUserChat";
 import { GRADIENT_CLASS } from "../constants/chatConstants";
 import ThreeDotsLoader from "./ThreeDotsLoader";
 
-export default () => {
+export default ({ toggleChat }) => {
   const [typedMessage, setTypedMessage] = createSignal("");
   const [showLoader, setShowLoader] = createSignal(false);
   const [messages, setMessages] = createSignal([{}]);
@@ -68,9 +68,14 @@ export default () => {
   };
 
   return (
-    <div class="h-[480px] w-92 flex flex-col  rounded-xl bg-white">
-      <div class={`p-4 text-center text-white rounded-xl ${GRADIENT_CLASS}`}>
-        CHATBOT APP
+    <div class="h-[480px] w-92 flex flex-col  rounded-xl bg-white transition-all duration-800 ease-out">
+      <div
+        class={`p-4 text-center text-white rounded-xl ${GRADIENT_CLASS} flex justify-between items-center`}
+      >
+        <p>CHATBOT APP</p>
+        <button class="p-2 cursor-pointer" onClick={toggleChat}>
+          ╳
+        </button>
       </div>
       <div class="flex-1 bg-white rounded-md overflow-y-auto p-5 flex flex-col gap-3">
         <BotAndUserChat messagesData={messages} />
