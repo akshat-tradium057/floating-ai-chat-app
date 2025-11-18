@@ -26,6 +26,15 @@ export default ({ toggleChat }) => {
     }
   };
 
+  const scrollToBottom = () => {
+    const chatWindow = document.getElementById("chatWindow");
+    if (chatWindow) {
+      setTimeout(() => {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }, 500);
+    }
+  };
+
   const onClickSend = async () => {
     setShowLoader(true);
 
@@ -47,8 +56,6 @@ export default ({ toggleChat }) => {
 
       const res = await fetchMessage(msg);
 
-      console.log("🚀 ~ onClickSend ~ res:", res);
-
       if (res?.text && res?.response_id) {
         setShowLoader(false);
         setMessages((messages: any) => {
@@ -61,6 +68,7 @@ export default ({ toggleChat }) => {
             },
           ];
         });
+        scrollToBottom();
       }
     }
 
@@ -77,7 +85,10 @@ export default ({ toggleChat }) => {
           ╳
         </button>
       </div>
-      <div class="flex-1 bg-white rounded-md overflow-y-auto p-5 flex flex-col gap-3">
+      <div
+        class="flex-1 bg-white rounded-md overflow-y-auto p-5 flex flex-col gap-3"
+        id="chatWindow"
+      >
         <BotAndUserChat messagesData={messages} />
         <Show when={showLoader()}>
           <ThreeDotsLoader />
@@ -94,7 +105,7 @@ export default ({ toggleChat }) => {
           onKeyPress={handleKeyPress}
         />
         <button
-          class="p-3 bg-transparent h-8 text-center flex justify-center items-center border border-purple-500 rounded-md cursor-pointer hover:bg-purple-500 hover:text-white transition-all duration-500 disabled:bg-slate-300 disabled:hover:text-inherit disabled:cursor-not-allowed disabled:border-slate-300"
+          class={`p-3 bg-transparent h-8 text-center flex justify-center items-center border border-[#1ca9c9] rounded-md cursor-pointer hover:bg-[#1ca9c9] hover:text-white transition-all duration-500 disabled:bg-slate-300 disabled:hover:text-inherit disabled:cursor-not-allowed disabled:border-slate-300 hover:${GRADIENT_CLASS}`}
           onClick={onClickSend}
           disabled={showLoader()}
         >
